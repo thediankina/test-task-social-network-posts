@@ -33,4 +33,22 @@ class User extends Model
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * @inheritdoc
+     */
+    public $timestamps = false;
+
+    /**
+     * Get validation rules
+     *
+     * @return array
+     */
+    public static function rules(): array
+    {
+        return [
+            'username' => ['required', 'unique:users', 'max:100'],
+            'password' => ['required'],
+        ];
+    }
 }
