@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property int $id
- * @property string $username
+ * @property string $name
+ * @property string $login
  * @property string $password
  */
-class User extends Model
+class User extends Authenticatable
 {
     use HasFactory;
 
@@ -23,7 +26,8 @@ class User extends Model
      * @inheritdoc
      */
     protected $fillable = [
-        'username',
+        'name',
+        'login',
         'password',
     ];
 
@@ -40,6 +44,18 @@ class User extends Model
     public $timestamps = false;
 
     /**
+     * Hash password
+     *
+     * @return Attribute
+     */
+    protected function password(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => bcrypt($value),
+        );
+    }
+
+    /**
      * Get validation rules
      *
      * @return array
@@ -47,8 +63,19 @@ class User extends Model
     public static function rules(): array
     {
         return [
-            'username' => ['required', 'unique:users', 'max:100'],
+            'name' => ['max:50'],
+            'login' => ['required', 'max:100'],
             'password' => ['required'],
         ];
+    }
+
+    /**
+     * Get user's posts
+     *
+     * @return HasMany
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
     }
 }

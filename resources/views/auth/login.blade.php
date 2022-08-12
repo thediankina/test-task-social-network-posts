@@ -11,9 +11,9 @@
 <form action="/login" method="post">
     @csrf
     <div class="row">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" class="@error('username') is-invalid @enderror">
-        @error('username')
+        <label for="login">Login</label>
+        <input type="text" id="login" name="login" class="@error('login') is-invalid @enderror">
+        @error('login')
         <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>

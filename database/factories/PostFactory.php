@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class UserFactory extends Factory
+class PostFactory extends Factory
 {
     /**
      * @inheritdoc
@@ -12,9 +12,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->firstName(),
-            'login' => fake()->userName(),
-            'password' => fake()->password(),
+            'title' => fake()->sentence(),
+            'content' => fake()->text(),
         ];
     }
 }
