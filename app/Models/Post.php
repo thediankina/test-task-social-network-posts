@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $id
@@ -29,10 +30,22 @@ class Post extends Model
      */
     protected $fillable = [
         'title',
-        'likes',
         'content',
         'user_id',
     ];
+
+    /**
+     * Get validation rules
+     *
+     * @return array
+     */
+    public static function rules(): array
+    {
+        return [
+            'title' => ['required', 'max:100'],
+            'content' => ['required'],
+        ];
+    }
 
     /**
      * Get author
@@ -41,6 +54,16 @@ class Post extends Model
      */
     public function author(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    /**
+     * Return if watcher is an author
+     *
+     * @return bool
+     */
+    public function allow(): bool
+    {
+        return $this->user_id == Auth::id();
     }
 }

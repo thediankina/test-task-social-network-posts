@@ -16,11 +16,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::controller(AuthController::class)->group(function () {
-    Route::match(['get', 'post'], 'login', 'login');
-    Route::match(['get', 'post'], 'register', 'register');
+    // Login
+    Route::match(['get', 'post'], '/login', 'login');
+    // Registration
+    Route::match(['get', 'post'], '/register', 'register');
+    // Logout
+    Route::get('/logout', 'logout');
 });
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('posts', 'list')->name('posts');
-    Route::get('post', 'view')->name('post');
+    // Posts
+    Route::get('/posts', 'list')->name('posts');
+    // Post's actions
+    Route::prefix('post')->group(function () {
+        // View post
+        Route::get('/{id}', 'show')
+            ->where('id', '[0-9]+');
+        // Create post
+        Route::match(['get', 'post'], '/create', 'create');
+        // Update post
+        Route::match(['get', 'post'], '/update/{id}', 'update')
+            ->where('id', '[0-9]+');
+        // Delete post
+        Route::get('/delete/{id}', 'delete')
+            ->where('id', '[0-9]+');
+    });
 });

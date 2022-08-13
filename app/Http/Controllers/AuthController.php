@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     /**
-     * Registration page
+     * Registration
      *
      * @param Request $request
      * @return View|RedirectResponse
@@ -30,11 +30,11 @@ class AuthController extends Controller
 
             return redirect('login');
         }
-        return view('auth/register');
+        return view('auth.register');
     }
 
     /**
-     * Login page
+     * Login
      *
      * @param Request $request
      * @return View|RedirectResponse
@@ -52,7 +52,7 @@ class AuthController extends Controller
                 ]);
             }
         }
-        return view('auth/login');
+        return view('auth.login');
     }
 
     /**
@@ -73,7 +73,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Logout action
+     * Logout
      *
      * @param Request $request
      * @return RedirectResponse
