@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::redirect('/', '/login');
+
 Route::controller(AuthController::class)->group(function () {
     // Login
     Route::match(['get', 'post'], '/login', 'login');
@@ -39,6 +41,12 @@ Route::controller(PostController::class)->group(function () {
             ->where('id', '[0-9]+');
         // Delete post
         Route::get('/delete/{id}', 'delete')
+            ->where('id', '[0-9]+');
+        // Like post
+        Route::get('/like/{id}', 'like')
+            ->where('id', '[0-9]+');
+        // Dislike post
+        Route::get('/dislike/{id}', 'dislike')
             ->where('id', '[0-9]+');
     });
 });

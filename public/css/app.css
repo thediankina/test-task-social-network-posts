@@ -1,0 +1,17 @@
+.likes input {
+    display: none;
+}
+
+#checkbox {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+.likes #checkbox {
+    background: url("../images/dislike.svg") no-repeat;
+}
+
+.likes input:checked ~ #checkbox {
+    background: url("../images/like.svg") no-repeat;
+}

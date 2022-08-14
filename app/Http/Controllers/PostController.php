@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -30,8 +31,14 @@ class PostController extends Controller
      */
     public function show(int $id): View
     {
+        $like = DB::table('likes')->where([
+            'user_id' => Auth::id(),
+            'post_id' => $id,
+        ])->exists();
+
         return view('post.show', [
-            'model' => Post::query()->find($id),
+            'item' => Post::query()->find($id),
+            'like' => $like,
         ]);
     }
 
@@ -46,12 +53,14 @@ class PostController extends Controller
         if ($request->isMethod('post')) {
             $request->validate(Post::rules());
 
-            $post = new Post();
-            $post->fill($request->all());
-            $post->user_id = Auth::id();
-            $post->save();
+            $item = new Post();
+            $item->fill($request->all());
+            $item->user_id = Auth::id();
+            $item->save();
 
-            return redirect('post/' . $post->id);
+            return redirect(url('post', [
+                'id' => $item->id,
+            ]));
         }
         return view('post.edit');
     }
@@ -65,28 +74,62 @@ class PostController extends Controller
      */
     public function update(int $id, Request $request): View|RedirectResponse
     {
+        $item = Post::query()->find($id);
+
         if ($request->isMethod('post')) {
             $request->validate(Post::rules());
 
-            $post = new Post();
-            $post->fill($request->all());
-            $post->user_id = Auth::id();
-            $post->save();
+            $item->update([
+                'title' => $request->input('title'),
+                'content' => $request->input('content'),
+            ]);
 
-            return redirect('post/' . $post->id);
+            return redirect(url('post', [
+                'id' => $id,
+            ]));
         }
 
         return view('post.edit', [
-            'model' => Post::query()->find($id),
+            'item' => $item,
         ]);
     }
 
     /**
+     * Delete post
+     *
      * @param int $id
      * @return RedirectResponse
      */
     public function delete(int $id): RedirectResponse
     {
         return Post::query()->find($id)->delete() ? redirect('posts') : abort(404);
+    }
+
+    /**
+     * Like post
+     *
+     * @param int $id
+     * @return void
+     */
+    public function like(int $id): void
+    {
+        DB::table('likes')->insertOrIgnore([
+            'user_id' => Auth::id(),
+            'post_id' => $id,
+        ]);
+    }
+
+    /**
+     * Dislike post
+     *
+     * @param int $id
+     * @return void
+     */
+    public function dislike(int $id): void
+    {
+        DB::table('likes')->where([
+            'user_id' => Auth::id(),
+            'post_id' => $id,
+        ])->delete();
     }
 }
