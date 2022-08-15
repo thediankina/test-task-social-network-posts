@@ -1,10 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: #483D8BFF;
+    padding: 15px;
+    font-weight: bold;
+}
+
+a {
+    text-decoration: none;
+}
+
+header a {
+    margin-left: 15px;
+    color: #edf2f7;
+}
+
+.container {
+    margin: 0 5px;
+}
+
+.post {
+    border: 1px solid #663399FF;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4B0082FF;
+    margin-top: 5px;
+}
+
+.author {
+    color: #8B008BFF;
+    margin-top: 5px;
+}
+
 .likes {
     display: inline-flex;
     align-items: center;
+    margin-top: 10px;
 }
 
 .like-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
     padding-right: 5px;
+    background: url("../images/dislike.svg") no-repeat;
 }
 
 .likes input {
@@ -23,4 +76,44 @@
 
 .likes input:checked ~ #checkbox {
     background: url("../images/like.svg") no-repeat;
+}
+
+.menu {
+    padding: 10px 0;
+    margin: 5px 5px 0 5px;
+}
+
+.menu a {
+    border: 1px solid #663399FF;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+form {
+    border: 1px solid #C71585FF;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 5px;
+    width: 40%;
+}
+
+#content {
+    resize: none;
+    width: 98%;
+}
+
+.submit-button {
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: #C71585FF;
+    font-size: 14px;
+    font-weight: bolder;
+    color: #FFFFFFFF;
+    align-self: center;
+}
+
+.row {
+    display: flex;
 }

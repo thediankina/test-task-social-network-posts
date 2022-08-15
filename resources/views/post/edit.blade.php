@@ -3,7 +3,9 @@
 @section('title', 'Create post')
 
 @section('content')
-    <a href="/posts">Go back</a>
+    <div class="menu">
+        <a href="/posts">Go back</a>
+    </div>
     <form action="{{ isset($item) ? "/post/update/$item->id" : "/post/create" }}" method="post">
         @csrf
         <div class="row">
@@ -16,14 +18,14 @@
         </div>
         <div class="row">
             <label for="content" hidden>Content</label>
-            <textarea id="content" name="content" placeholder="Content"
+            <textarea id="content" name="content"
                       class="@error('content') is-invalid @enderror">{{ $item->content ?? null }}</textarea>
             @error('content')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="row">
-            <input type="submit" value="{{ isset($item) ? "Update" : "Create" }}">
+            <input type="submit" class="submit-button" value="{{ isset($item) ? "Update" : "Create" }}">
         </div>
     </form>
 @endsection

@@ -12,8 +12,8 @@
 </head>
 <header>
     @auth
-        <a href="/post/create">Create post</a>
         <a href="/logout">Logout</a>
+        <a href="/post/create">Create post</a>
     @endauth
     @guest
         <a href="/login">Login</a>

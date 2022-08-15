@@ -4,13 +4,11 @@
 
 @section('content')
     @foreach($posts as $post)
-        <div class="post">
-            <div class="title">
-                <a href="post/{{ $post->id }}">{{ $post->title }}</a>
-            </div>
+        <div class="post" onclick="location.href='post/{{ $post->id }}'">
+            <div class="title">{{ $post->title }}</div>
             <div class="author">{{ $post->author->name }}</div>
             <div class="likes">
-                @like_icon()
+                <div class="like-icon"></div>
                 <div class="likes-number">{{ $post->likes }}</div>
             </div>
         </div>

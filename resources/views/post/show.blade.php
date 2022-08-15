@@ -3,8 +3,10 @@
 @section('title', 'View post')
 
 @section('content')
-    <a href="/posts">Go back</a>
-    @includeWhen($item->allow(), 'post.menu', ['id' => $item->id])
+    <div class="menu">
+        <a href="/posts" class="back-button">Go back</a>
+        @includeWhen($item->allow(), 'post.menu', ['id' => $item->id])
+    </div>
     <div class="post">
         <div class="author">{{ $item->author->name }}</div>
         <div class="title">{{ $item->title }}</div>
