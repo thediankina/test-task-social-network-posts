@@ -15,10 +15,10 @@ return new class extends Migration
     public function up(): void
     {
         DB::unprepared('CREATE TRIGGER count_likes
-        AFTER INSERT
+        AFTER INSERT OR DELETE
         ON likes
         FOR EACH ROW
-        EXECUTE PROCEDURE count_likes_trigger_function();');
+        EXECUTE FUNCTION count_likes_trigger_function();');
     }
 
     /**

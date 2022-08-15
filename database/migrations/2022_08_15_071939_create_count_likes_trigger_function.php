@@ -18,10 +18,16 @@ return new class extends Migration
         RETURNS TRIGGER
         AS $$
         BEGIN
-            UPDATE posts
-            SET likes = (SELECT count(*) FROM likes WHERE post_id = NEW.post_id)
-            WHERE id = NEW.post_id;
-            RETURN NEW;
+            IF (TG_OP = \'INSERT\') THEN
+                UPDATE posts
+                SET likes = (SELECT count(*) FROM likes WHERE post_id = NEW.post_id)
+                WHERE id = NEW.post_id;
+            ELSIF (TG_OP = \'DELETE\') THEN
+                UPDATE posts
+                SET likes = (SELECT count(*) FROM likes WHERE post_id = OLD.post_id)
+                WHERE id = OLD.post_id;
+            END IF;
+            RETURN NULL;
         END;
         $$ LANGUAGE PLPGSQL;');
     }

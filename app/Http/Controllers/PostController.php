@@ -19,7 +19,9 @@ class PostController extends Controller
     public function list(): View
     {
         return view('post.list', [
-            'posts' => Post::all(),
+            'posts' => Post::query()
+                ->orderBy('id')
+                ->get(),
         ]);
     }
 
