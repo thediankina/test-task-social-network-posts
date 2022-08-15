@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,5 +19,11 @@ class DatabaseSeeder extends Seeder
         User::factory(5)
             ->has(Post::factory(2))
             ->create();
+
+        DB::table('users')->insert([
+            'name' => 'test',
+            'login' => 'test',
+            'password' => bcrypt('test'),
+        ]);
     }
 }

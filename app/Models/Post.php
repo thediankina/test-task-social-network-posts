@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @property int $id
@@ -33,6 +35,22 @@ class Post extends Model
         'content',
         'user_id',
     ];
+
+    /**
+     * Return count of likes
+     *
+     * @return Attribute
+     */
+    protected function likes(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return DB::table('likes')->where([
+                    'post_id' => $this->id,
+                ])->count();
+            },
+        );
+    }
 
     /**
      * Get validation rules

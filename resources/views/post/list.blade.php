@@ -9,7 +9,10 @@
                 <a href="post/{{ $post->id }}">{{ $post->title }}</a>
             </div>
             <div class="author">{{ $post->author->name }}</div>
-            <div class="likes">Likes: {{ $post->likes }}</div>
+            <div class="likes">
+                @like_icon()
+                <div class="likes-number">{{ $post->likes }}</div>
+            </div>
         </div>
     @endforeach
 @endsection

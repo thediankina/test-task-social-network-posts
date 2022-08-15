@@ -11,23 +11,18 @@
         <div class="text">{{ $item->content }}</div>
         <div class="likes">
             <input type="checkbox" id="like" name="like" {{ $like ? "checked" : null }}>
-            <label for="like" id="checkbox"></label>{{ $item->likes }}
+            <label class="like-icon" for="like" id="checkbox"></label>
+            <div class="likes-number">{{ $item->likes }}</div>
         </div>
     </div>
     <script type="text/javascript">
         $('#like').on('change', function (event) {
             event.preventDefault();
-            if ($('#like').is(':checked')) {
-                $.ajax({
-                    url: "/post/like/" + {{ $item->id }},
-                    type: "GET",
-                });
-            } else {
-                $.ajax({
-                    url: "/post/dislike/" + {{ $item->id }},
-                    type: "GET",
-                });
-            }
+            $.ajax({
+                url: "/post/"+ ($('#like').is(':checked') ? "like/" : "dislike/") + {{ $item->id }},
+                type: "GET",
+            });
+            $(".likes-number").load(location.href + " .likes-number");
         });
     </script>
 @endsection
