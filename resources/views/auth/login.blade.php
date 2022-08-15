@@ -20,7 +20,7 @@
             @enderror
         </div>
         <div class="row">
-            <input type="submit" value="Login">
+            <input type="submit" class="submit-button" value="Login">
         </div>
     </form>
     <div id="not-registered">

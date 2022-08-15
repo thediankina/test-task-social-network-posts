@@ -27,7 +27,7 @@
             @enderror
         </div>
         <div class="row">
-            <input type="submit" value="Create">
+            <input type="submit" class="submit-button" value="Create">
         </div>
     </form>
 @endsection
